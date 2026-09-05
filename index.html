@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MEGABONK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;800&family=IBM+Plex+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="view"></canvas>
+      <div id="floaters"></div>
+      <div id="bonk-slam" aria-hidden="true">BONK!</div>
+
+      <div id="hud" hidden>
+        <div class="hud-top">
+          <div class="meat-wrap">
+            <div class="meat-label">MEAT</div>
+            <div class="meat-bar"><i id="hp-fill"></i></div>
+            <div id="hp-text" class="hud-num">100/100</div>
+          </div>
+          <div class="clock-wrap">
+            <div id="clock" class="clock">00:00</div>
+            <div id="wave-tag" class="wave-tag">WARMUP</div>
+          </div>
+          <div class="score-wrap">
+            <div class="score-line"><span>KILLS</span><b id="kills">0</b></div>
+            <div class="score-line"><span>GOLD</span><b id="gold">0</b></div>
+            <div class="score-line"><span>LV</span><b id="level">1</b></div>
+          </div>
+        </div>
+        <div class="xp-wrap">
+          <div id="xp-fill"></div>
+          <div id="xp-text">0 / 10</div>
+        </div>
+        <div id="weapons" class="weapon-row"></div>
+        <canvas id="minimap" width="148" height="148"></canvas>
+        <div id="interact-hint" hidden>E — poke it</div>
+        <div id="toast"></div>
+      </div>
+
+      <div id="menu" class="overlay">
+        <div class="ticket">
+          <p class="eyebrow">fan-made 3D survivor-like</p>
+          <h1>MEGA<span>BONK</span></h1>
+          <p class="tagline">
+            Walk. Jump. Slide. Let the weapons do the screaming.
+          </p>
+
+          <div id="chars" class="chars"></div>
+          <p id="char-blurb" class="blurb"></p>
+
+          <button id="start-btn" class="smash">SMASH START</button>
+
+          <div class="meta-row">
+            <div>best <b id="best-time">00:00</b></div>
+            <div>lifetime kills <b id="life-kills">0</b></div>
+            <div>runs <b id="runs">0</b></div>
+          </div>
+
+          <ul id="quests" class="quests"></ul>
+
+          <p class="controls">
+            WASD move · SPACE jump · SHIFT slide · E interact · mouse look · ESC
+            pause
+          </p>
+        </div>
+      </div>
+
+      <div id="levelup" class="overlay" hidden>
+        <div class="levelup-box">
+          <p class="eyebrow">you got bigger</p>
+          <h2>PICK A TOME</h2>
+          <div id="cards" class="cards"></div>
+          <p class="hint">1 / 2 / 3</p>
+        </div>
+      </div>
+
+      <div id="shop" class="overlay" hidden>
+        <div class="levelup-box">
+          <p class="eyebrow">suspicious tent</p>
+          <h2>BUY SOMETHING LOUD</h2>
+          <div id="shop-cards" class="cards"></div>
+          <p class="hint">gold in your pockets · ESC to leave</p>
+        </div>
+      </div>
+
+      <div id="pause" class="overlay" hidden>
+        <div class="ticket mini">
+          <h2>HELD</h2>
+          <p class="blurb">The horde is politely waiting.</p>
+          <button id="resume-btn" class="smash">KEEP BONKING</button>
+          <button id="quit-btn" class="ghost">chicken out</button>
+        </div>
+      </div>
+
+      <div id="results" class="overlay" hidden>
+        <div class="ticket">
+          <p id="result-eyebrow" class="eyebrow">run over</p>
+          <h2 id="result-title">SPLATTED</h2>
+          <div id="result-stats" class="result-stats"></div>
+          <button id="again-btn" class="smash">BONK AGAIN</button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

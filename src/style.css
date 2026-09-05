@@ -1,0 +1,563 @@
+:root {
+  --void: #140e18;
+  --moss: #2f6b45;
+  --bone: #e8d5a3;
+  --gold: #ffcc33;
+  --bruise: #7b3fa0;
+  --pulp: #e23d3d;
+  --teal: #2f9e8a;
+  --ink: #1a1420;
+  --card: #23182b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--void);
+  color: var(--bone);
+  font-family: Nunito, system-ui, sans-serif;
+}
+
+#view {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+#floaters {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floater {
+  position: absolute;
+  font-family: "Lilita One", sans-serif;
+  font-size: 22px;
+  color: var(--gold);
+  text-shadow: 0 2px 0 #000, 2px 0 0 #5b2d7a;
+  transform: translate(-50%, -50%);
+  animation: float-up 0.7s ease-out forwards;
+  white-space: nowrap;
+}
+
+.floater.hp {
+  color: #7dff9a;
+  text-shadow: 0 2px 0 #000;
+}
+
+.floater.hurt {
+  color: var(--pulp);
+}
+
+@keyframes float-up {
+  to {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% - 48px));
+  }
+}
+
+#bonk-slam {
+  position: fixed;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%) scale(0.4);
+  font-family: "Lilita One", sans-serif;
+  font-size: clamp(72px, 14vw, 180px);
+  color: var(--gold);
+  text-shadow:
+    6px 0 0 #7b3fa0,
+    -6px 0 0 #e23d3d,
+    0 8px 0 #000;
+  opacity: 0;
+  pointer-events: none;
+  letter-spacing: 0.04em;
+  z-index: 20;
+}
+
+#bonk-slam.go {
+  animation: slam 0.42s cubic-bezier(0.2, 1.4, 0.3, 1) forwards;
+}
+
+@keyframes slam {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.2) rotate(-8deg);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(2deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -62%) scale(0.9) rotate(0);
+  }
+}
+
+#hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hud-top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  padding: 16px 20px 0;
+  align-items: start;
+}
+
+.meat-wrap,
+.score-wrap {
+  background: rgba(20, 14, 24, 0.78);
+  border: 3px solid #3a2a18;
+  box-shadow: inset 0 0 0 2px #c9a227;
+  padding: 8px 10px;
+}
+
+.meat-label,
+.score-line span,
+.wave-tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: #c9b48a;
+}
+
+.meat-bar {
+  height: 14px;
+  background: #2a1216;
+  border: 2px solid #140e18;
+  margin: 4px 0;
+}
+
+#hp-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #8b1d2c, #e23d3d 55%, #ff8a6a);
+}
+
+.hud-num,
+.score-line b,
+.clock {
+  font-family: "Lilita One", sans-serif;
+  color: var(--gold);
+}
+
+.clock-wrap {
+  text-align: center;
+}
+
+.clock {
+  font-size: 44px;
+  line-height: 1;
+  text-shadow: 0 3px 0 #000;
+}
+
+.wave-tag {
+  margin-top: 2px;
+}
+
+.score-wrap {
+  justify-self: end;
+  min-width: 140px;
+}
+
+.score-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 18px;
+}
+
+.xp-wrap {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 16px;
+  height: 18px;
+  background: #1a1420;
+  border: 3px solid #3a2a18;
+  box-shadow: inset 0 0 0 2px #c9a227;
+}
+
+#xp-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #5b2d7a, #c97bff);
+}
+
+#xp-text {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  color: var(--bone);
+}
+
+.weapon-row {
+  position: absolute;
+  left: 20px;
+  bottom: 44px;
+  display: flex;
+  gap: 8px;
+}
+
+.weapon-chip {
+  min-width: 72px;
+  padding: 6px 8px;
+  background: rgba(20, 14, 24, 0.82);
+  border: 2px solid #c9a227;
+  font-size: 12px;
+}
+
+.weapon-chip b {
+  display: block;
+  font-family: "Lilita One", sans-serif;
+  color: var(--gold);
+}
+
+#minimap {
+  position: absolute;
+  right: 18px;
+  bottom: 44px;
+  width: 148px;
+  height: 148px;
+  border: 3px solid #3a2a18;
+  box-shadow: inset 0 0 0 2px #c9a227;
+  background: #102018;
+}
+
+#interact-hint,
+#toast {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Lilita One", sans-serif;
+  text-shadow: 0 2px 0 #000;
+}
+
+#interact-hint {
+  bottom: 78px;
+  font-size: 22px;
+  color: var(--gold);
+}
+
+#toast {
+  top: 96px;
+  font-size: 20px;
+  color: var(--bone);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+#toast.show {
+  opacity: 1;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+  padding: 12px;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(123, 63, 160, 0.28), transparent 45%),
+    rgba(10, 6, 12, 0.72);
+  z-index: 5;
+}
+
+.overlay[hidden] {
+  display: none !important;
+}
+
+.ticket {
+  width: min(640px, 92vw);
+  padding: 18px 22px 16px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #2a1c14 0 10px,
+      #241812 10px 20px
+    );
+  border: 4px solid #c9a227;
+  box-shadow:
+    0 0 0 6px #140e18,
+    12px 16px 0 #000;
+  text-align: center;
+}
+
+.ticket.mini {
+  width: min(420px, 90vw);
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #c9b48a;
+}
+
+h1 {
+  margin: 6px 0 0;
+  font-family: "Lilita One", sans-serif;
+  font-size: clamp(44px, 8vw, 84px);
+  line-height: 0.9;
+  color: var(--bone);
+  text-shadow: 5px 0 0 #7b3fa0, -4px 4px 0 #e23d3d;
+  transform: rotate(-1.5deg);
+}
+
+h1 span {
+  color: var(--gold);
+}
+
+h2 {
+  margin: 4px 0 12px;
+  font-family: "Lilita One", sans-serif;
+  font-size: 42px;
+  color: var(--gold);
+  text-shadow: 0 3px 0 #000;
+}
+
+.tagline,
+.blurb {
+  margin: 10px 0 18px;
+  font-size: 16px;
+}
+
+.chars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.char {
+  pointer-events: auto;
+  cursor: pointer;
+  border: 3px solid #6a5420;
+  background: var(--card);
+  color: var(--bone);
+  padding: 12px 8px;
+  font-family: "Lilita One", sans-serif;
+  font-size: 20px;
+}
+
+.char.sel {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px #7b3fa0;
+}
+
+.char:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.char small {
+  display: block;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: #c9b48a;
+}
+
+.smash,
+.ghost {
+  pointer-events: auto;
+  cursor: pointer;
+  font-family: "Lilita One", sans-serif;
+  border: 0;
+}
+
+.smash {
+  margin-top: 8px;
+  padding: 14px 28px;
+  font-size: 28px;
+  background: var(--gold);
+  color: var(--ink);
+  box-shadow: 0 5px 0 #8a6a10;
+}
+
+.smash:hover {
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 #8a6a10;
+}
+
+.smash:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ghost {
+  display: block;
+  margin: 14px auto 0;
+  background: transparent;
+  color: var(--bone);
+  font-size: 18px;
+  text-decoration: underline;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+}
+
+.quests {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  text-align: left;
+}
+
+.quests li {
+  padding: 6px 0;
+  border-top: 1px dashed #6a5420;
+  font-size: 14px;
+}
+
+.quests li.done {
+  color: #7dff9a;
+}
+
+.controls {
+  margin: 16px 0 0;
+  font-size: 13px;
+  color: #c9b48a;
+}
+
+.levelup-box {
+  width: min(920px, 94vw);
+  text-align: center;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.card {
+  pointer-events: auto;
+  cursor: pointer;
+  text-align: left;
+  background: var(--card);
+  border: 3px solid #8a8a8a;
+  padding: 16px;
+  min-height: 180px;
+  box-shadow: 6px 8px 0 #000;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card.common {
+  border-color: #c9b48a;
+}
+
+.card.rare {
+  border-color: var(--teal);
+}
+
+.card.epic {
+  border-color: #c97bff;
+}
+
+.card.legendary {
+  border-color: var(--gold);
+  box-shadow: 6px 8px 0 #000, 0 0 18px #ffcc3388;
+}
+
+.card .rarity {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+}
+
+.card h3 {
+  margin: 8px 0 6px;
+  font-family: "Lilita One", sans-serif;
+  font-size: 26px;
+  color: var(--gold);
+}
+
+.card p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.card .price {
+  margin-top: 12px;
+  font-family: "Lilita One", sans-serif;
+  color: var(--gold);
+}
+
+.hint {
+  color: #c9b48a;
+}
+
+.result-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  margin: 8px 0 18px;
+  font-size: 16px;
+}
+
+.result-stats > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.result-stats b {
+  font-family: "Lilita One", sans-serif;
+  color: var(--gold);
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .chars,
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  .clock {
+    font-size: 32px;
+  }
+  #minimap {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floater,
+  #bonk-slam.go,
+  .smash:hover,
+  .card:hover {
+    animation: none;
+    transform: none;
+  }
+}
