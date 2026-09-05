@@ -22,7 +22,7 @@ export class Player {
   vz = 0;
   yaw = 0;
   camYaw = 0.4;
-  camPitch = 0.42;
+  camPitch = Math.PI / 3;
   hp: number;
   maxHp: number;
   baseSpeed: number;
@@ -86,7 +86,7 @@ export class Player {
     if (!this.alive) return;
     const mouse = input.pullMouse();
     this.camYaw -= mouse.x * 0.0024;
-    this.camPitch = clamp(this.camPitch - mouse.y * 0.0022, 0.12, 1.15);
+    this.camPitch = clamp(this.camPitch - mouse.y * 0.0022, 0.7, 1.25);
 
     this.iframe = Math.max(0, this.iframe - dt);
     this.invuln = Math.max(0, this.invuln - dt);
@@ -176,7 +176,7 @@ export class Player {
 
   camera(cam: THREE.PerspectiveCamera, shake: number): void {
     const edge = Math.hypot(this.x, this.z);
-    const dist = edge > 72 ? 6.4 : 10.4;
+    const dist = edge > 72 ? 8 : 13;
     const lookY = this.y + 1.45;
     const ox = Math.sin(this.camYaw) * Math.cos(this.camPitch) * dist;
     const oy = Math.sin(this.camPitch) * dist + 1.2;
