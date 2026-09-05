@@ -6,12 +6,24 @@ This is an original recreation of the *loop*, not a copy of official art, audio,
 
 ## Play
 
+Double-click **`megabonk.html`**. That file is self-contained (CSS, game code, and Three.js are baked in), so it runs without `npm` or a server.
+
+To rebuild it after you change the source:
+
 ```bash
 npm install
+npm run build
+```
+
+For live reload while editing:
+
+```bash
 npm run dev
 ```
 
-Open the URL Vite prints (usually `http://localhost:5173`). Click the canvas once a run starts so the mouse can look around.
+Then open the URL Vite prints (usually `http://localhost:5173`). Click the canvas once a run starts so the mouse can look around.
+
+Do not open the source `index.html` — that file is only the Vite entry and will not run by itself.
 
 ## Controls
 
